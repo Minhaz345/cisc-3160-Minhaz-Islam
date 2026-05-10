@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lab: The Multimedia Dictionary</title>
+</head>
+
+<body>
+
+    <h2>The Multimedia Dictionary</h2>
+
+    <!-- dropdown menu section-->
+    <select id="wordMenu" onchange="updateSentence()">
+        <option value="">-- Select a Word --</option>
+        <option value="Dog" data-sentence="The dog barked very loud.">Dog</option>
+        <option value="food" data-sentence="My favorite food is mac n cheese.">Food</option>
+        <option value="Sun" data-sentence="The sun is very hot.">Sun</option>
+        <option value="Car" data-sentence="Lamborghini is a fast car.">Car</option>
+        <option value="Book" data-sentence="My favorite book is Harry Potter.">Book</option>
+    </select>
+    <!-- speak word button -->
+    <button onclick="playWord()">Speak Word</button>
+
+    <br><br>
+
+    <!-- speak sentence button -->
+    <textarea id="sentenceBox" rows="3" cols="40" readonly></textarea>
+    <button onclick="playSentence()">Speak Sentence</button>
+
+    <script>
+
+        function speak(textToSay) {
+            const message = new SpeechSynthesisUtterance(textToSay);
+            message.pitch = 1.0;
+            message.rate = 1.0;
+            window.speechSynthesis.speak(message);
+        }
+
+        // sentence update function
+        function updateSentence() {
+            const menu = document.getElementById("wordMenu");
+            const box = document.getElementById("sentenceBox");
+
+            if (menu.selectedIndex > 0) { // check if a word is selected
+                const selectedOption = menu.options[menu.selectedIndex];
+                box.value = selectedOption.dataset.sentence;
+            } else {
+                box.value = ""; // clear the sentence box if no word is selected
+            }
+        }
+
+        // speak word button function
+        function playWord() {
+            const menu = document.getElementById("wordMenu");
+
+            if (menu.selectedIndex > 0) {
+                speak(menu.value); // speak the selected word
+            } else {
+                alert("Please select a word first!");
+            }
+
+        }
+
+        // speak sentence button function
+        function playSentence() {
+            const sentence = document.getElementById("sentenceBox").value;
+
+            if (sentence !== "") {
+                speak(sentence); // speak the sentence 
+            } else {
+                alert("No sentence to speak!"); //error if empty
+            }
+        }
+    </script>
+
+</body>
+
+</html>
