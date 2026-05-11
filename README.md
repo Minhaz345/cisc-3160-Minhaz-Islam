@@ -10,4 +10,4 @@
 
 ## Assignments
 
-https://minhaz345.github.io/multimediadictionary/
+https://minhaz345.github.io/cisc-3160-Minhaz-Islam/
