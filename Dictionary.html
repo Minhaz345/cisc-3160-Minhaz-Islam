@@ -1,79 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Lab: The Multimedia Dictionary</title>
+    <title>Dictionary Lab</title>
 </head>
-
 <body>
 
-    <h2>The Multimedia Dictionary</h2>
+    <h2>Multimedia Dictionary</h2>
 
-    <!-- dropdown menu section-->
-    <select id="wordMenu" onchange="updateSentence()">
-        <option value="">-- Select a Word --</option>
-        <option value="Dog" data-sentence="The dog barked very loud.">Dog</option>
-        <option value="food" data-sentence="My favorite food is mac n cheese.">Food</option>
-        <option value="Sun" data-sentence="The sun is very hot.">Sun</option>
-        <option value="Car" data-sentence="Lamborghini is a fast car.">Car</option>
-        <option value="Book" data-sentence="My favorite book is Harry Potter.">Book</option>
+    <select id="menu" onchange="showText()">
+        <option value="">-- Select --</option>
+        <option value="Dog" data-s="The dog barked very loud.">Dog</option>
+        <option value="Food" data-s="My favorite food is mac n cheese.">Food</option>
+        <option value="Sun" data-s="The sun is very hot.">Sun</option>
+        <option value="Car" data-s="Lamborghini is a fast car.">Car</option>
+        <option value="Book" data-s="My favorite book is Harry Potter.">Book</option>
     </select>
-    <!-- speak word button -->
-    <button onclick="playWord()">Speak Word</button>
+
+    <button onclick="say(document.getElementById('menu').value)">Speak Word</button>
 
     <br><br>
 
-    <!-- speak sentence button -->
-    <textarea id="sentenceBox" rows="3" cols="40" readonly></textarea>
-    <button onclick="playSentence()">Speak Sentence</button>
+    <textarea id="box" rows="3" cols="40" readonly></textarea>
+    <button onclick="say(document.getElementById('box').value)">Speak Sentence</button>
 
     <script>
-
-        function speak(textToSay) {
-            const message = new SpeechSynthesisUtterance(textToSay);
-            message.pitch = 1.0;
-            message.rate = 1.0;
-            window.speechSynthesis.speak(message);
-        }
-
-        // sentence update function
-        function updateSentence() {
-            const menu = document.getElementById("wordMenu");
-            const box = document.getElementById("sentenceBox");
-
-            if (menu.selectedIndex > 0) { // check if a word is selected
-                const selectedOption = menu.options[menu.selectedIndex];
-                box.value = selectedOption.dataset.sentence;
+        // Simple speech function
+        function say(txt) {
+            if (txt == "") {
+                alert("Nothing to say!");
             } else {
-                box.value = ""; // clear the sentence box if no word is selected
+                var msg = new SpeechSynthesisUtterance(txt);
+                window.speechSynthesis.speak(msg);
             }
         }
 
-        // speak word button function
-        function playWord() {
-            const menu = document.getElementById("wordMenu");
-
+        // Updates the box when a word is picked
+        function showText() {
+            var menu = document.getElementById("menu");
+            var box = document.getElementById("box");
+            
             if (menu.selectedIndex > 0) {
-                speak(menu.value); // speak the selected word
+                var info = menu.options[menu.selectedIndex];
+                box.value = info.getAttribute("data-s");
             } else {
-                alert("Please select a word first!");
-            }
-
-        }
-
-        // speak sentence button function
-        function playSentence() {
-            const sentence = document.getElementById("sentenceBox").value;
-
-            if (sentence !== "") {
-                speak(sentence); // speak the sentence 
-            } else {
-                alert("No sentence to speak!"); //error if empty
+                box.value = "";
             }
         }
     </script>
 
 </body>
-
 </html>
