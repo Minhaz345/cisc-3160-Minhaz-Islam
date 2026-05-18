@@ -8,6 +8,6 @@
 
 ---
 
-## Assignments
+## Link to my portfolio
 
 https://minhaz345.github.io/cisc-3160-Minhaz-Islam/
